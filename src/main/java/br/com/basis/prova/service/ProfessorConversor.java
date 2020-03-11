@@ -14,7 +14,7 @@ public class ProfessorConversor {
 	public Professor conversor(ProfessorResource professorResource) throws ProfessorResourceException {
 		try {
 			Professor professor = new Professor();
-			LocalDate dataNascimento = checkIdade(professorResource.getDataNascimento());
+			LocalDate dataNascimento = professorResource.getDataNascimento();
 			professor.setNome(professorResource.getNome());
 			professor.setMatricula(professorResource.getMatricula());
 			professor.setArea(professorResource.getArea());
@@ -27,9 +27,4 @@ public class ProfessorConversor {
 		}
 
 	}
-
-	private LocalDate checkIdade(String idade) {
-		return LocalDate.parse(idade);
-	}
-
 }

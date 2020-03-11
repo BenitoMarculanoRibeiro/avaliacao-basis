@@ -1,13 +1,16 @@
 package br.com.basis.prova.resource.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProfessorResource implements Serializable {
 
 	private static final long serialVersionUID = 6030862910379069667L;
-
+	@JsonProperty("ID")
+	private String id;
+	
 	@JsonProperty("NOME")
 	private String nome;
 
@@ -20,6 +23,16 @@ public class ProfessorResource implements Serializable {
 	@JsonProperty("DATA_NASCIMENTO")
 	private String dataNascimento;
 
+	@JsonProperty("ID")
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@JsonProperty("nome")
 	public String getNome() {
 		return nome;
 	}
@@ -28,6 +41,7 @@ public class ProfessorResource implements Serializable {
 		this.nome = nome;
 	}
 
+	@JsonProperty("matricula")
 	public String getMatricula() {
 		return matricula;
 	}
@@ -36,6 +50,7 @@ public class ProfessorResource implements Serializable {
 		this.matricula = matricula;
 	}
 
+	@JsonProperty("area")
 	public String getArea() {
 		return area;
 	}
@@ -44,14 +59,16 @@ public class ProfessorResource implements Serializable {
 		this.area = area;
 	}
 
-	public String getDataNascimento() {
-		return dataNascimento;
+	@JsonProperty("dataNascimento")
+	public LocalDate getDataNascimento() {
+		return LocalDate.parse(dataNascimento);
 	}
 
 	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
+	@JsonProperty("serialVersionUID")
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
