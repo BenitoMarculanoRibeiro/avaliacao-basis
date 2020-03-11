@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <changeSet id="1" author="chrysthian.moizes">
+       <sql>
+
+           CREATE TABLE ALUNO (
+                ID         INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela aluno',
+                MATRICULA  varchar(6) NOT NULL COMMENT 'Campo que armazena a Matrícula do aluno',
+                CPF        varchar(11) NOT NULL COMMENT 'Campo que armazena o CPF do aluno',
+                NOME       varchar(100) NOT NULL COMMENT 'Campo que armazena o nome do aluno',
+                DATA_NASCIMENTO  date NOT NULL COMMENT 'Campo que armazena a data de nascimento do aluno',
+                CONSTRAINT PK_ALUNO_ID PRIMARY KEY ( ID )
+           ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+       </sql>
+    </changeSet>
+
+    <changeSet id="2" author="diego.tesch">
+        <sql>
+
+            CREATE TABLE PROFESSOR (
+                ID INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primária da tabela PROFESSOR',
+                NOME varchar(100) NOT NULL COMMENT 'Campo que armazena o nome do PROFESSOR',
+                MATRICULA  varchar(6) NOT NULL COMMENT 'Campo que armazena a Matrícula do PROFESSOR',
+                AREA_ATUACAO VARCHAR(200) COMMENT 'Campo que armazena a area de atuação PROFESSOR',
+                DATA_NASCIMENTO date NOT NULL COMMENT 'Campo que armazena a data de neascimento do PROFESSOR',
+                CONSTRAINT PK_PROFESSOR_ID PRIMARY KEY (ID)
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="diego.tesch">
+        <sql>
+            CREATE TABLE DISCIPLINA (
+                ID INT NOT NULL AUTO_INCREMENT COMMENT 'Chave primaria da tabela DISCIPLINA',
+                NOME varchar(100) NOT NULL COMMENT 'Campo que armazena o nome da DISCIPLINA',
+                DESCRICAO VARCHAR(200) NOT NULL COMMENT 'Campo que uma descricao para a DISCIPLINA',
+                CARGA_HORARIA INT NOT NULL COMMENT 'Campo que armazena a carga horaria para a DISCIPLINA',
+                ATIVA INT NOT NULL DEFAULT 1 COMMENT 'Campo que armazena o status da DISCIPLINA 0 para inativo 1 para ativo',
+                ID_PROFESSOR INT NOT NULL COMMENT 'Campo que relaciona uma DISCIPLINA a um PROFESSOR',
+                CONSTRAINT PK_DISCIPLINA_ID PRIMARY KEY (ID),
+                CONSTRAINT FK_PROFESSOR_ID FOREIGN KEY (ID_PROFESSOR) REFERENCES PROFESSOR (ID)
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="chrysthian.moizes">
+        <sql>
+
+            CREATE TABLE ALUNO_DISCIPLINA (
+                ID_ALUNO INT NOT NULL,
+                ID_DISCIPLINA INT NOT NULL,
+                CONSTRAINT FK_ALUNO_ID FOREIGN KEY ( ID_ALUNO ) REFERENCES ALUNO ( ID ),
+                CONSTRAINT FK_DISCIPLINA_ID FOREIGN KEY ( ID_DISCIPLINA ) REFERENCES DISCIPLINA( ID )
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
