@@ -13,40 +13,32 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import br.com.basis.prova.dominio.Professor;
-import br.com.basis.prova.repository.ProfessorRepository;
+import br.com.basis.prova.dominio.Disciplina;
+import br.com.basis.prova.repository.DisciplinaRepository;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-//@Sql(scripts = "/sql/insert_profe_buscar_todos_os_profe.sql")
 public class BuscarDisciplinaServiceImplTest {
 
 	@Autowired
-	private BuscarProfessorsServiceImpl serviceImpl;
+	private BuscarDisciplinasServiceImpl serviceImpl;
 
 	@Autowired
-	private ProfessorRepository professorRepository;
+	private DisciplinaRepository disciplinaRepository;
 
 	@Test
-	public void buscarTodosOsProfessorsTest() {
-		List<Professor> listaProfessors = serviceImpl.buscarTodosOsProfessors();
-
-		List<Professor> listaProfessorsDatabase = professorRepository.findAll();
-
-		Professor professorService = listaProfessors.stream().filter(profe -> profe.getNome().equals("Murilo"))
-				.findFirst().get();
-
-		Professor professorDatabase = listaProfessorsDatabase.stream().filter(profe -> profe.getNome().equals("Murilo"))
-				.findFirst().get();
-
-		assertNotNull(Objects.nonNull(listaProfessors));
-		assertEquals(professorDatabase.getNome(), professorService.getNome());
-		assertEquals(professorDatabase.getMatricula(), professorService.getMatricula());
-		assertEquals(professorDatabase.getArea(), professorService.getArea());
-		assertEquals(professorDatabase.getDataNascimento(), professorService.getDataNascimento());
-		assertEquals(listaProfessors.size(), listaProfessorsDatabase.size());
-
+	public void buscarTodasAsDisciplinasTest() {
+		List<Disciplina> listaDisciplinas = serviceImpl.buscarTodosOsDisciplinas();
+		List<Disciplina> listaDisciplinasDatabase = disciplinaRepository.findAll();
+		Disciplina disciplinaService = listaDisciplinas.stream().findFirst().get();
+		Disciplina disciplinaDatabase = listaDisciplinasDatabase.stream().findFirst().get();
+		assertNotNull(Objects.nonNull(listaDisciplinas));
+		assertEquals(disciplinaDatabase.getNome(), disciplinaService.getNome());
+		assertEquals(disciplinaDatabase.getDescricao(), disciplinaService.getDescricao());
+		assertEquals(disciplinaDatabase.getCargaHoraria(), disciplinaService.getCargaHoraria());
+		assertEquals(disciplinaDatabase.getAtiva(), disciplinaService.getAtiva());
+		assertEquals(disciplinaDatabase.getProfessor(), disciplinaService.getProfessor());
+		assertEquals(listaDisciplinas.size(), listaDisciplinasDatabase.size());
 	}
-
 }

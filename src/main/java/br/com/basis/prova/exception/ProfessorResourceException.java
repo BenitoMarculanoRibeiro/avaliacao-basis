@@ -24,5 +24,4 @@ public class ProfessorResourceException extends Exception {
 	public ProfessorResourceException(Throwable cause) {
 		super(cause);
 	}
-
 }
